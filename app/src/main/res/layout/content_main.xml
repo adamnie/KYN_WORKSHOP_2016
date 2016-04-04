@@ -12,7 +12,14 @@
     tools:context="com.example.adam.kyn_workshop_2016.MainActivity"
     tools:showIn="@layout/activity_main">
 
+    <Spinner
+        android:id="@+id/beacon_selection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <TextView
+        android:id="@+id/temperature_view"
+        android:layout_marginTop="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!" />
