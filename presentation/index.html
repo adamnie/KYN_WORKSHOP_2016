@@ -41,21 +41,18 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					slajd z onetem
-				</section>
-				<section>
 					<h2 class="fragment">Jak zimne jest twoje... </h2>
-					<h2 class="fragment">...mleko?</h2>
+					<h2 class="fragment">... piwo?</h2>
 				</section>
 
 				<section>
 					<h2>Agenda</h2>
 					<ol>
-						<li>Agenda</li>
-						<li>Wstęp do Internet of things</li>
-						<li>Srodowisko</li>
-						<li>Co będziemy budować</li>
-						<li>Zbudujmy to!</li>
+						<li class="fragment">Agenda</li>
+						<li class="fragment">Wstęp do Internet of things</li>
+						<li class="fragment">Srodowisko</li>
+						<li class="fragment">Co będziemy budować</li>
+						<li class="fragment">Zbudujmy to!</li>
 					</ol>
 				</section>
 
@@ -63,11 +60,70 @@
 					<section>
 							<h2>Internet of Things </h2>
 					</section>
+					<!-- IoT definition -->
+					<section>
+						<h3>Internet of Things ...</h3>
+						<p class="fragment">... is a network of interconnected <em>things</em> ...</p>
+						<p class="fragment">... embedded with electronics and sensors ...</p>
+						<p class="fragment">... which enables them to achieve greater value and service ...</p>
+						<p class="fragment">... by exchanging and analysing data.</p>
+					</section>
+
+
+					<!-- Examples -->
+					<section data-markdown>
+						## "Rzeczy"
+						![thing](img/thing1.png)
+						![thing](img/thing2.png)
+						![thing](img/thing3.png)
+						![thing](img/thing4.png)
+						![thing](img/thing5.png)
+						![thing](img/thing6.png)
+					</section>
+
+					<!-- First appliance -->
+					<section>
+						<h3>Pierwsze zastosowanie</h3>
+						<img src="img/coke.png" alt="" />
+					</section>
+
+					<section data-background="img/nearable_back.png">
+
+					</section>
+
+					<section>
+						Protokoły
+						<p class="fragment">
+							iBeacon
+						</p>
+						<p class="fragment">
+							Eddystone
+						</p>
+					</section>
 
 				</section>
 
 				<section>
 					<h2>Środowisko</h2>
+					<p class="fragment">
+						Java 1.7
+					</p>
+					<p class="fragment">
+						Android Studio
+					</p>
+					<p class="fragment">
+						Sdk 23.2
+					</p>
+					<p class="fragment">
+						Estimote Sdk
+					</p>
+					<p class="fragment">
+						Telefon + BLE + Android 5.1
+					</p>
+					<p class="fragment">
+						Estimote Stickers
+					</p>
+
 				</section>
 
 				<section>
@@ -94,23 +150,23 @@ public class MainActivity extends Activity {
 					</section>
 
 					<section>
-						<h3>Intent</h3>
-							<li class="fragment"><pre><code class="language-java">
-Intent intent = new Intent(Activity_starting_other_activity, ActivityToBeStarted.class);
-startActivity(Intent intent);
-startActivityForResult(Intent intent, int requestCode);
-							</code></pre></li>
-							<li class="fragment"><pre><code class="language-java">
-@Override
-protected void onActivityResult(int requestCode, int resultCode, Intent intent){
-		if(resultCode != RESULT_OK) {
-				finish(); //ends activity
-		} else {
-				// do something with the information retrieved
-		}
+						<h3>Fragment</h3>
+							<p class="fragment"><pre><code class="language-java">
+public class BeaconListFragment extends Fragment {
+    public BeaconListFragment() {
+        // Required empty public constructor
+    }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_beacon_list, container, false);
+    }
 }
-							</code></pre></li>
+							</code></pre></p>
+							<p class="fragment"><pre><code class="language-java">
+							</code></pre></p>
 					</section>
 					<section>
 						<h3>Logger</h3>
@@ -124,7 +180,7 @@ protected void onActivityResult(int requestCode, int resultCode, Intent intent){
 						## Android studio
 					</section>
 					<section>
-						<h2>Project Structure</h2>
+						<h2>Struktura projektu</h2>
 						<img src="img/android-1.png"></img>
 					</section>
 					<section>
@@ -193,7 +249,24 @@ android {
 				</section>
 
 				<section>
-					<h3>Budujmy!</h3>
+					<section>
+						<h3>Budujmy!</h3>
+					</section>
+					<section>
+						Nowy projekt
+					</section>
+					<section>
+						Same fragmenty + przełączanie
+					</section>
+					<section>
+						Application
+					</section>
+					<section>
+						Wykrywanie beaconów
+					</section>
+					<section>
+						TU CZĘŚĆ ERYKA
+					</section>
 				</section>
 
 			</div>
