@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">KYN_WORKSHOP_2016</string>
     <string name="action_settings">Settings</string>
+
+<string-array name="beer_list">
+    <item>Saison</item>
+    <item>APA</item>
+    <item>Biale</item>
+    <item>Marcowe</item>
+    <item>Bock</item>
+    <item>Porter</item>
+</string-array>
+
 </resources>
