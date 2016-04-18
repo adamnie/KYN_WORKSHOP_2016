@@ -40,15 +40,28 @@
 
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
+
+				<section>
+					<h2 class="fragment">Ankieta</h2>
+					<ol>
+						<li class="fragment">Imie</li>
+						<li class="fragment">Kierunek</li>
+						<li class="fragment">Androidowy skill</li>
+						<li class="fragment">Jak ze sprzętem</li>
+					</ol>
+				</section>
+
 				<section>
 					<h2 class="fragment">Jak zimne jest twoje... </h2>
 					<h2 class="fragment">... piwo?</h2>
 				</section>
 
+				<section data-background="img/Motywacja.png">
+				</section>
+
 				<section>
 					<h2>Agenda</h2>
 					<ol>
-						<li class="fragment">Agenda</li>
 						<li class="fragment">Wstęp do Internet of things</li>
 						<li class="fragment">Srodowisko</li>
 						<li class="fragment">Co będziemy budować</li>
@@ -87,18 +100,65 @@
 						<img src="img/coke.png" alt="" />
 					</section>
 
+
+					<section>
+						<h2>Beacon'y</h2>
+						<p class="fragment">Dają kontekst</p>
+						<p class="fragment">Mają wbudowane sensory</p>
+						<p class="fragment">Komunikacja jednokierunkowa</p>
+						<p class="fragment">Korzystają z BlueTooth LowEnergy</p>
+					</section>
+
 					<section data-background="img/nearable_back.png">
 
 					</section>
 
 					<section>
+						<h2>Estimote stickers</h2>
+						<p class="fragment">
+							zasięg do ~7m
+						</p>
+						<p class="fragment">
+							Wodoodporne
+						</p>
+						<p class="fragment">
+							żyją około rok
+						</p>
+					</section>
+
+
+					<section>
 						Protokoły
 						<p class="fragment">
 							iBeacon
+							<ul>
+								<li class="fragment">Monitorowanie</li>
+								<li class="fragment">Określanie odległości</li>
+								<li class="fragment">UUID, major, minor</li>
+							</ul>
 						</p>
 						<p class="fragment">
 							Eddystone
+							<ul>
+								<li class="fragment">Status beacona</li>
+							</ul>
 						</p>
+					</section>
+
+					<section>
+						<h2>Nearable Protocol</h2>
+						<p class="fragment">typ</p>
+						<p class="fragment">id</p>
+						<p class="fragment">pozycja w przestrzeni</p>
+						<p class="fragment">ruch w osiach X, Y, Z</p>
+						<p class="fragment">temperature</p>
+						<p class="fragment">moc sygnału</p>
+						<p class="fragment">poziom baterii</p>
+						<p class="fragment">firmware</p>
+					</section>
+					<section>
+						<h2>Aplikacja Estimote</h2>
+						<img src="img/sample-1.png" alt="" />
 					</section>
 
 				</section>
@@ -165,7 +225,17 @@ public class BeaconListFragment extends Fragment {
     }
 }
 							</code></pre></p>
-							<p class="fragment"><pre><code class="language-java">
+
+							</section>
+							<section>
+							<h3>Application</h3>
+							<p ><pre><code class="language-java">
+public class ApplicationKYN2016 extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+    }
 							</code></pre></p>
 					</section>
 					<section>
@@ -187,19 +257,27 @@ public class BeaconListFragment extends Fragment {
 						<h3>Gradle</h3>
 						<pre><code class="language-java">
 android {
-		compileSdkVersion 21
-		buildToolsVersion "21.1.2"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
 
-		defaultConfig {
-				applicationId "com.workshops.helloworld"
-				minSdkVersion 18
-				targetSdkVersion 21
-				versionCode 1
-				versionName "1.0"
-		}
-		...
-		}
-						</code></pre>
+    defaultConfig {
+        applicationId "com.example.adam.kyn_workshop_2016"
+        minSdkVersion 21
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+	....		</code></pre>
+					</section>
+					<section>
+						<pre><code class="language-java">
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.android.support:design:23.2.1'
+    compile 'com.estimote:sdk:0.9.4@aar'
+}	</code></pre>
 					</section>
 					<section>
 						<h3>Android Manifest</h3>
@@ -262,10 +340,33 @@ android {
 						Application
 					</section>
 					<section>
+						<section>
 						Wykrywanie beaconów
+						</section>
+						<section>
+							mBeaconManager.setNearableListener(new BeaconManager.NearableListener() {
+
+			@Override
+			public void onNearablesDiscovered(List<Nearable> nearables) {
+					for(Nearable nearable: nearables) {
+							mNearables.put(nearable, nearable.temperature);
+
+					}
+			}
+	});
+						</section>
+						<section>
+							<h3>Tak, ten błąd był oczekiwany</h3>
+						</section>
+
 					</section>
+
 					<section>
-						TU CZĘŚĆ ERYKA
+						Listowanie beaconoów
+					</section>
+
+					<section>
+						<h2>Koniec części pierwszej</h2>
 					</section>
 				</section>
 
