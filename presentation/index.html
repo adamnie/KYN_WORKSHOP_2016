@@ -60,11 +60,132 @@
 				</section>
 
 				<section>
-				<h2>Internet of Things </h2>
+					<section>
+							<h2>Internet of Things </h2>
+					</section>
+
 				</section>
 
 				<section>
 					<h2>Środowisko</h2>
+				</section>
+
+				<section>
+					<section>
+						Android
+					</section>
+
+					<section>
+						<h3>Activity</h3>
+							<pre><code class="language-java">
+public class MainActivity extends Activity {
+
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+				super.onCreate(savedInstanceState);
+				setContentView(R.layout.activity_main);
+		}
+
+}							</code></pre>
+						</p>
+					</section>
+					<section>
+						<img src="img/android-flow.png" class="stretch"></img>
+					</section>
+
+					<section>
+						<h3>Intent</h3>
+							<li class="fragment"><pre><code class="language-java">
+Intent intent = new Intent(Activity_starting_other_activity, ActivityToBeStarted.class);
+startActivity(Intent intent);
+startActivityForResult(Intent intent, int requestCode);
+							</code></pre></li>
+							<li class="fragment"><pre><code class="language-java">
+@Override
+protected void onActivityResult(int requestCode, int resultCode, Intent intent){
+		if(resultCode != RESULT_OK) {
+				finish(); //ends activity
+		} else {
+				// do something with the information retrieved
+		}
+
+}
+							</code></pre></li>
+					</section>
+					<section>
+						<h3>Logger</h3>
+						<p class="fragment"><em>debug (Log.d)</em></p>
+						<p class="fragment">info (Log.i)</p>
+						<p class="fragment">error (Log.e)</p>
+						<p class="fragment">verbose (Log.v)</p>
+						<p class="fragment">warn (Log.w)</p>
+					</section>
+					<section data-markdown>
+						## Android studio
+					</section>
+					<section>
+						<h2>Project Structure</h2>
+						<img src="img/android-1.png"></img>
+					</section>
+					<section>
+						<h3>Gradle</h3>
+						<pre><code class="language-java">
+android {
+		compileSdkVersion 21
+		buildToolsVersion "21.1.2"
+
+		defaultConfig {
+				applicationId "com.workshops.helloworld"
+				minSdkVersion 18
+				targetSdkVersion 21
+				versionCode 1
+				versionName "1.0"
+		}
+		...
+		}
+						</code></pre>
+					</section>
+					<section>
+						<h3>Android Manifest</h3>
+						<pre><code class="language-java">
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;manifest xmlns:android="http://schemas.android.com/apk/res/android"
+		package="com.workshops.helloworld" &gt;
+		&lt;uses-permission
+			 android:name="android.permission.SOME_PERMISSION" /&gt;
+
+		&lt;application
+				android:allowBackup="true"
+				android:icon="@mipmap/ic_launcher"
+				android:labelw="@string/app_name"
+				android:theme="@style/AppTheme" &gt;
+				&lt;activity
+						android:name=".MainActivity"
+						android:label="@string/app_name" &gt;
+						&lt;intent-filter&gt;
+								&lt;action android:name="android.intent.action.MAIN" /&gt;
+								&lt;category android:name="android.intent.category.LAUNCHER" /&gt;
+						&lt;/intent-filter&gt;
+				&lt;/activity&gt;
+		&lt;/application&gt;
+
+&lt;/manifest&gt;
+					</code></pre>
+					</section>
+
+					<section data-markdown>
+						##Resources
+
+						* Drawable <!-- .element: class="fragment" -->
+						* Layout <!-- .element: class="fragment" -->
+						* Values <!-- .element: class="fragment" -->
+							* Styles <!-- .element: class="fragment" -->
+							* Strings <!-- .element: class="fragment" -->
+							* Colors <!-- .element: class="fragment" -->
+							* Dimens <!-- .element: class="fragment" -->
+
+					</section>
 				</section>
 
 				<section>
