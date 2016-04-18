@@ -1,6 +1,7 @@
 package com.example.adam.kyn_workshop_2016;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Handler;
@@ -22,6 +23,7 @@ public class BeaconListFragment extends Fragment {
     private ApplicationKYN2016 mApplication;
     private Handler mHandler;
     private List<String> mDataset;
+    private ProgressDialog progress;
 
     private static final Integer UPDATE_LIST_INTERVAL = 4 * 1000;
 
@@ -39,6 +41,9 @@ public class BeaconListFragment extends Fragment {
         mBeaconList = (ListView) view.findViewById(R.id.beacon_list);
         mDataset = new ArrayList<>();
         mHandler = new Handler();
+
+        progress = ProgressDialog.show(getActivity(), "",
+                "Skanowanie beaconów...", true);
 
         AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
             @Override
@@ -67,6 +72,8 @@ public class BeaconListFragment extends Fragment {
         Set<Nearable> nearbales = mApplication.getTemperatureMap().keySet();
         for(Nearable nearable: nearbales) {
             if(!mDataset.contains(nearable.identifier)) {
+                if (progress.isShowing())
+                    progress.dismiss();
                 mDataset.add(nearable.identifier);
             }
         }
