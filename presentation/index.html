@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Prezentacja i Komunikacja</title>
+		<title>Warsztaty Koło</title>
 
 		<meta name="description" content="Summary presentation from PyCon2015 PL conference for Ericpol">
 		<meta name="author" content="Adam Niedziałkowski">
@@ -40,15 +40,27 @@
 
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
-
 				<section>
-					<h2 class="fragment">Ankieta</h2>
-					<ol>
-						<li class="fragment">Imie</li>
-						<li class="fragment">Kierunek</li>
-						<li class="fragment">Androidowy skill</li>
-						<li class="fragment">Jak ze sprzętem</li>
-					</ol>
+					<h2>Środowisko</h2>
+					<p class="fragment">
+						Java 1.7
+					</p>
+					<p class="fragment">
+						Android Studio
+					</p>
+					<p class="fragment">
+						Sdk 23.2
+					</p>
+					<p class="fragment">
+						Estimote Sdk
+					</p>
+					<p class="fragment">
+						Telefon + BLE + Android 5.1
+					</p>
+					<p class="fragment">
+						Estimote Stickers
+					</p>
+
 				</section>
 
 				<section>
@@ -56,17 +68,34 @@
 					<h2 class="fragment">... piwo?</h2>
 				</section>
 
-				<section data-background="img/Motywacja.png">
+				<section>
+					<img src="img/Motywacja.png" width="500" height="400"alt=""  />
 				</section>
 
 				<section>
 					<h2>Agenda</h2>
 					<ol>
+						<li class="fragment">Co będziemy budować</li>
 						<li class="fragment">Wstęp do Internet of things</li>
 						<li class="fragment">Srodowisko</li>
-						<li class="fragment">Co będziemy budować</li>
 						<li class="fragment">Zbudujmy to!</li>
 					</ol>
+				</section>
+
+				<section>
+					<section>
+							<h2>Co będziemy budować?</h2>
+					</section>
+					<section>
+						<img src="img/screen1.png" width="350" height="600" alt="" />
+					</section>
+					<section>
+						<img src="img/screen2.png" width="350" height="600" alt="" />
+					</section>
+					<section>
+						<img src="img/screen3.png" width="350" height="600" alt="" />
+					</section>
+
 				</section>
 
 				<section>
@@ -158,37 +187,18 @@
 					</section>
 					<section>
 						<h2>Aplikacja Estimote</h2>
-						<img src="img/sample-1.png" alt="" />
+						<img src="img/sample-1.png" height="600"alt="" />
+					</section>
+
+					<section>
+						<h2>Estimote Cloud</h2>
 					</section>
 
 				</section>
 
 				<section>
-					<h2>Środowisko</h2>
-					<p class="fragment">
-						Java 1.7
-					</p>
-					<p class="fragment">
-						Android Studio
-					</p>
-					<p class="fragment">
-						Sdk 23.2
-					</p>
-					<p class="fragment">
-						Estimote Sdk
-					</p>
-					<p class="fragment">
-						Telefon + BLE + Android 5.1
-					</p>
-					<p class="fragment">
-						Estimote Stickers
-					</p>
-
-				</section>
-
-				<section>
 					<section>
-						Android
+						<h2>Android</h2>
 					</section>
 
 					<section>
@@ -323,51 +333,340 @@ dependencies {
 				</section>
 
 				<section>
-					<h2>Co będziemy budować?</h2>
-				</section>
-
-				<section>
 					<section>
 						<h3>Budujmy!</h3>
 					</section>
 					<section>
-						Nowy projekt
+						<h2>Nowy projekt</h2>
 					</section>
 					<section>
-						Same fragmenty + przełączanie
+						<h2>Stworzyć obiekt Application</h2>
 					</section>
-					<section>
-						Application
-					</section>
-					<section>
-						<section>
-						Wykrywanie beaconów
-						</section>
-						<section>
-							mBeaconManager.setNearableListener(new BeaconManager.NearableListener() {
 
-			@Override
-			public void onNearablesDiscovered(List<Nearable> nearables) {
-					for(Nearable nearable: nearables) {
-							mNearables.put(nearable, nearable.temperature);
+					<section>
+						<h3>Wpis w android manifest</h3>
+						<pre><code class="language-java">
+android:name=".ApplicationKYN2016"
+						</code></pre>
+					</section>
 
-					}
-			}
+					<section>
+						<h3>Znajdowanie beaconoów</h3>
+					<pre><code class="language-java">
+public void startRanging(){
+	mBeaconManager.connect(new BeaconManager.ServiceReadyCallback() {
+		@Override
+		public void onServiceReady() {
+				mBeaconManager.startNearableDiscovery();
+		}
 	});
+}
+
+public void stopRanging(){
+	mBeaconManager.disconnect();
+}
+						</code></pre>
+					</section>
+
+						<section>
+							<h2>Wykrywanie beaconów</h2>
+							<pre><code class="language-java">
+mBeaconManager.setNearableListener(new BeaconManager.NearableListener() {
+	@Override
+	public void onNearablesDiscovered(List&lt;Nearable&gt;nearables) {
+		for(Nearable nearable: nearables) {
+			Log.d("beacon", nearable.identifier);
+		}
+	}
+});</code></pre>
 						</section>
+
+						<section>
+							<h2>Rozpocząć skanowanie!</h2>
+							<pre><code class="language-java">
+@Override
+protected void onStart() {
+	super.onStart();
+	mApplication.startRanging();
+}
+
+@Override
+protected void onDestroy() {
+	super.onDestroy();
+	mApplication.stopRanging();
+}
+							</code></pre>
+						</section>
+
 						<section>
 							<h3>Tak, ten błąd był oczekiwany</h3>
 						</section>
 
-					</section>
+						<section>
+							Permisions
+							<pre><code class="language-java">
+&lt;uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /&gt;
+&lt;uses-permission android:name="android.permission.INTERNET"  /&gt;
+&lt;uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /&gt;
+&lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /&gt;
+							</code></pre>
+						</section>
+
 
 					<section>
-						Listowanie beaconoów
+						Stwórz nową klasę - <em>BeaconItem</em>
+						<pre><code class="language-java">public class BeaconItem {
+    private String name;
+    private String id;
+    private static Map&lt;String, String&gt; beaconMap;
+
+    static {
+        beaconMap = new HashMap<>();
+        beaconMap.put("33927f15e3b75104", "fridge");
+        beaconMap.put("66fc8e73f145e172", "door");
+        beaconMap.put("0929888a57bf4fb7", "bag");
+        beaconMap.put("3f2ac3b188b1adfc", "bike");
+        beaconMap.put("0a296db82040d52d", "chair");
+        beaconMap.put("bbe08f1308d5093f", "car");
+        beaconMap.put("84b70d36fd22d5a6", "generic");
+        beaconMap.put("5085ab2174e6ffff", "bed");
+        beaconMap.put("bb6820d988547674", "dog");
+        beaconMap.put("389a2f206e537f96", "shoe");
+    }
+}					</code></pre>
 					</section>
+				<section>Dodaj konstruktor oraz metodę tworzącą listę obiektów z listy id
+						<pre><code class="language-java">private BeaconItem(String name, String id){
+        this.name = name;
+        this.id = id;
+    }
+
+    public static ArrayList&lt;BeaconItem&gt; fromList(List&lt;String&gt; idList){
+        ArrayList&lt;BeaconItem&gt; beaconList = new ArrayList&lt;&gt;();
+        for (String id : idList){
+            beaconList.add(new BeaconItem(beaconMap.get(id), id));
+        }
+
+        return beaconList;
+    }</code></pre>
+    				</section>
+    				<section>
+    				Dodaj gettery dla pól <em>id</em> oraz <em>name</em>
+						<pre><code class="language-java">public String getName() {
+        return name;
+    }
+
+public String getId() {
+        return id;
+    }</code></pre>
+    				</section>
+    				<section>
+    				Stwórz nowy layout - <em>beacon_item.xml</em> w katalogu <em>layout</em>
+						<pre><code class="language-java">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"&gt;
+
+&lt;/LinearLayout&gt;</code></pre>
+    				</section>
+    				<section>
+    				Dodaj do <em>Linear Layout</em> pola: <em>ImageView</em> oraz <em>TextView</em>
+						<pre><code class="language-java">&lt;ImageView android:id="@+id/icon"
+    android:layout_width="75dp"
+    android:layout_height="75dp" /&gt;
+
+&lt;TextView android:id="@+id/name"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="15dp"
+    android:layout_gravity="center_vertical"
+    android:fontFamily="sans-serif-thin"
+    android:textSize="24sp"/&gt;</code></pre>
+    				</section>
+    				<section>
+    				Stwórz nową klasę: <em>BeaconArrayAdapter</em> i zaimplementuj konstruktor oraz pole <em>Context</em>
+						<pre><code class="language-java">public class BeaconArrayAdapter extends ArrayAdapter&lt;BeaconItem&gt;{
+    private Context mContext;
+
+    public BeaconArrayAdapter(Context context, ArrayList&lt;BeaconItem&gt; beacons) {
+        super(context, 0, beacons);
+        this.mContext = context;
+    }
+}</code></pre>
+    				</section>
+    				<section>
+    				Nadpisz wymaganą metodę <em>getView()</em>
+						<pre><code class="language-java">@Override
+public View getView(int position, View convertView, ViewGroup parent) {
+    BeaconItem item = getItem(position);
+
+    if (convertView == null) {
+        convertView = LayoutInflater.from(getContext())
+        	.inflate(R.layout.beacon_item, parent, false);
+    }
+
+    ImageView icon = (ImageView) convertView.findViewById(R.id.icon);
+    TextView name = (TextView) convertView.findViewById(R.id.name);
+
+    Resources resources = mContext.getResources();
+    final int resourceId = resources.getIdentifier(item.getName(),
+    	"drawable", mContext.getPackageName());
+</code></pre>
+    				</section>
+    				<section>
+						<pre><code class="language-java">
+    icon.setImageResource(resourceId);
+    name.setText(item.getName());
+
+    return convertView;
+}</code></pre>
+    				</section>
+    				<section>
+    				Stwórz nowy Blank Fragment - <em>BeaconListFragment</em>
+						<pre><code class="language-java">public class BeaconListFragment extends Fragment {
+    public BeaconListFragment() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_beacon_list, container,
+        	false);
+    }
+}
+</code></pre>
+    				</section>
+						<section>
+    				Dodanie fragmentu w main activity
+						<pre><code class="language-java">if (savedInstanceState == null) {
+  getFragmentManager().beginTransaction()
+    .add(R.id.main_fragment, new BeaconListFragment(), "BeaconListFragment").commit();
+}
+</code></pre>
+    				</section>
+						<section>
+    				Dodanie <em>Frame Layout</em>
+						<pre><code class="language-java">&lt;FrameLayout android:id="@+id/main_fragment"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"&gt;
+    </FrameLayout>
+</code></pre>
+    				</section>
+    				<section>
+    				W utworzonym pliku <em>fragment_beacon_list.xml</em> dodaj <em>ListView</em>
+						<pre><code class="language-java">&lt;ListView android:id="@+id/beacon_list"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content" /&gt;
+</code></pre>
+    				</section>
+    				<section>
+    				Zmień metodę <em>onCreateView</em> aby <em>View</em> był zwracany na końcu
+						<pre><code class="language-java">@Override
+public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                         Bundle savedInstanceState) {
+    // Inflate the layout for this fragment
+    View view = inflater.inflate(R.layout.fragment_beacon_list, container,
+    	false);
+
+    return view;
+}
+
+</code></pre>
+    				</section>
+    				<section>
+    				Dodaj pola do klasy
+						<pre><code class="language-java">private ListView mBeaconList;
+private ApplicationKYN2016 mApplication;
+private Handler mHandler;
+private List&lt;String&gt; mDataset;
+private ProgressDialog mProgress;
+
+private static final Integer UPDATE_LIST_INTERVAL = 4 * 1000;
+</code></pre>
+    				</section>
+    				<section>
+    				Zainicjalizuj dodane pola oraz wyświetl okienko ładowania
+						<pre><code class="language-java">mApplication = (ApplicationKYN2016) getActivity().getApplication();
+mBeaconList = (ListView) view.findViewById(R.id.beacon_list);
+mDataset = new ArrayList<>();
+mHandler = new Handler();
+
+mProgress = ProgressDialog.show(getActivity(), "",
+        "Skanowanie beaconów...", true);
+</code></pre>
+    				</section>
+    				<section>
+    				Stwórz <em>OnClickItemListener</em> dla listy
+						<pre><code class="language-java">AdapterView.OnItemClickListener itemClickListener =
+	new AdapterView.OnItemClickListener() {
+    @Override
+    public void onItemClick(AdapterView&lt;?&gt; parent, View view, int position,
+    	long id) {
+
+    }
+};
+
+mBeaconList.setOnItemClickListener(itemClickListener);
+</code></pre>
+    				</section>
+    				<section>
+    				W środku metody <em>onItemClick()</em> wyświetl komunikat o id wybranego beacona
+						<pre><code class="language-java">@Override
+public void onItemClick(AdapterView&lt;?&gt; parent, View view, int position,
+	long id) {
+	BeaconItem beacon = (BeaconItem)parent.getItemAtPosition(position);
+	Toast toast = Toast.makeText(getActivity(), beacon.getId(),
+		Toast.LENGTH_LONG);
+	toast.show();
+}
+</code></pre>
+    				</section>
+							<section>
+
+							<h2>Odświeżanie listy</h2>
+							<pre><code class="language-java">
+private void updateAvailableBeacons(){
+	Set&lt;Nearable&gt; nearables = mApplication.getTemperatureMap().keySet();
+	for(Nearable nearable: nearables) {
+		if(!mDataset.contains(nearable.identifier)) {
+			if (mProgress.isShowing())
+				mProgress.dismiss();
+			mDataset.add(nearable.identifier);
+		}
+	}
+
+	BeaconArrayAdapter beaconAdapter = new BeaconArrayAdapter(getActivity(), BeaconItem.fromList(mDataset));
+	mBeaconList.setAdapter(beaconAdapter);
+
+	beaconAdapter.notifyDataSetChanged();
+}
+							</code></pre>
+						</section>
+
+						<section>
+							<h2>Runnable</h2>
+							<pre><code class="language-java">
+final Runnable updateBeaconList = new Runnable() {
+	@Override
+	public void run() {
+		try {
+		pdateAvailableBeacons();
+		} finally {
+		mHandler.postDelayed(updateBeaconList, UPDATE_LIST_INTERVAL);
+		}
+	}
+};
+							</code></pre>
+						</section>
 
 					<section>
 						<h2>Koniec części pierwszej</h2>
 					</section>
+
 				</section>
 
 			</div>
