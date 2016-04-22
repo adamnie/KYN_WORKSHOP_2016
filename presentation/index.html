@@ -414,7 +414,8 @@ protected void onDestroy() {
 
 
 					<section>
-						Stwórz nową klasę - <em>BeaconItem</em>
+						Skopiuj z paczki plików plik <em>BeaconItem.java</em></br>
+						Wygląda on tak:
 						<pre><code class="language-java">public class BeaconItem {
     private String name;
     private String id;
@@ -435,47 +436,33 @@ protected void onDestroy() {
     }
 }					</code></pre>
 					</section>
-				<section>Dodaj konstruktor oraz metodę tworzącą listę obiektów z listy id
+				<section>
 						<pre><code class="language-java">private BeaconItem(String name, String id){
         this.name = name;
         this.id = id;
     }
 
-    public static ArrayList&lt;BeaconItem&gt; fromList(List&lt;String&gt; idList){
-        ArrayList&lt;BeaconItem&gt; beaconList = new ArrayList&lt;&gt;();
-        for (String id : idList){
-            beaconList.add(new BeaconItem(beaconMap.get(id), id));
-        }
-
-        return beaconList;
-    }</code></pre>
-    				</section>
-    				<section>
-    				Dodaj gettery dla pól <em>id</em> oraz <em>name</em>
-						<pre><code class="language-java">public String getName() {
-        return name;
+public static ArrayList&lt;BeaconItem&gt; fromList(List&lt;String&gt; idList){
+    ArrayList&lt;BeaconItem&gt; beaconList = new ArrayList&lt;&gt;();
+    for (String id : idList){
+        beaconList.add(new BeaconItem(beaconMap.get(id), id));
     }
 
-public String getId() {
-        return id;
-    }</code></pre>
-    				</section>
-    				<section>
-    				Stwórz nowy layout - <em>beacon_item.xml</em> w katalogu <em>layout</em>
-						<pre><code class="language-java">&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"&gt;
+    return beaconList;
+}
+public String getName() {
+    return name;
+}
 
-&lt;/LinearLayout&gt;</code></pre>
+public String getId() {
+    return id;
+}</code></pre>					
     				</section>
     				<section>
-    				Dodaj do <em>Linear Layout</em> pola: <em>ImageView</em> oraz <em>TextView</em>
+    				Skopiuj layout <em>item.xml</em> z paczki plików do katalogu <em>layout</em> 
 						<pre><code class="language-java">&lt;ImageView android:id="@+id/icon"
     android:layout_width="75dp"
-    android:layout_height="75dp" /&gt;
+    android:layout_height="75dp"/&gt;
 
 &lt;TextView android:id="@+id/name"
     android:layout_width="wrap_content"
@@ -483,7 +470,7 @@ public String getId() {
     android:layout_marginStart="15dp"
     android:layout_gravity="center_vertical"
     android:fontFamily="sans-serif-thin"
-    android:textSize="24sp"/&gt;</code></pre>
+    android:textSize="24sp"/&gt;</code></pre>					
     				</section>
     				<section>
     				Stwórz nową klasę: <em>BeaconArrayAdapter</em> i zaimplementuj konstruktor oraz pole <em>Context</em>
@@ -504,7 +491,7 @@ public View getView(int position, View convertView, ViewGroup parent) {
 
     if (convertView == null) {
         convertView = LayoutInflater.from(getContext())
-        	.inflate(R.layout.beacon_item, parent, false);
+        	.inflate(R.layout.item, parent, false);
     }
 
     ImageView icon = (ImageView) convertView.findViewById(R.id.icon);
@@ -524,6 +511,9 @@ public View getView(int position, View convertView, ViewGroup parent) {
 }</code></pre>
     				</section>
     				<section>
+						<h2>Skopiuj wszystkie pliki <em>.png</em> do katalogu Drawables (prawdopodobnie trzeba go utworzyć w katalogu <em>res</em>)</h2>
+					</section>
+    				<section>
     				Stwórz nowy Blank Fragment - <em>BeaconListFragment</em>
 						<pre><code class="language-java">public class BeaconListFragment extends Fragment {
     public BeaconListFragment() {
@@ -534,8 +524,10 @@ public View getView(int position, View convertView, ViewGroup parent) {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_beacon_list, container,
+        View view = inflater.inflate(R.layout.fragment_beacon_list, container,
         	false);
+
+        return view;
     }
 }
 </code></pre>
@@ -549,34 +541,21 @@ public View getView(int position, View convertView, ViewGroup parent) {
 </code></pre>
     				</section>
 						<section>
-    				Dodanie <em>Frame Layout</em>
+    				Dodanie <em>Frame Layout</em> w <em>content_main.xml</em>
 						<pre><code class="language-java">&lt;FrameLayout android:id="@+id/main_fragment"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent"&gt;
-    </FrameLayout>
+  	android:layout_width="fill_parent"
+  	android:layout_height="fill_parent"&gt;
+&lt;/FrameLayout&gt;
 </code></pre>
     				</section>
     				<section>
-    				W utworzonym pliku <em>fragment_beacon_list.xml</em> dodaj <em>ListView</em>
+    				Dodaj <em>ListView</em> w pliku <em>fragment_beacon_list.xml</em>
 						<pre><code class="language-java">&lt;ListView android:id="@+id/beacon_list"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content" /&gt;
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" /&gt;
 </code></pre>
     				</section>
-    				<section>
-    				Zmień metodę <em>onCreateView</em> aby <em>View</em> był zwracany na końcu
-						<pre><code class="language-java">@Override
-public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                         Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
-    View view = inflater.inflate(R.layout.fragment_beacon_list, container,
-    	false);
 
-    return view;
-}
-
-</code></pre>
-    				</section>
     				<section>
     				Dodaj pola do klasy
 						<pre><code class="language-java">private ListView mBeaconList;
@@ -654,7 +633,7 @@ final Runnable updateBeaconList = new Runnable() {
 	@Override
 	public void run() {
 		try {
-		pdateAvailableBeacons();
+		updateAvailableBeacons();
 		} finally {
 		mHandler.postDelayed(updateBeaconList, UPDATE_LIST_INTERVAL);
 		}
@@ -664,8 +643,292 @@ final Runnable updateBeaconList = new Runnable() {
 						</section>
 
 					<section>
-						<h2>Koniec części pierwszej</h2>
+						<h2>Włączcie aplikację i sprawdźcie czy pojawiają się beacony.</h2>
 					</section>
+					<section>
+						<h2>Runnable</h2>
+						<pre><code class="language-java">
+final Runnable updateBeaconList = new Runnable() {
+@Override
+public void run() {
+	try {
+	updateAvailableBeacons();
+	} finally {
+	mHandler.postDelayed(updateBeaconList, UPDATE_LIST_INTERVAL);
+	}
+}
+};
+						</code></pre>
+					</section>
+					<section>
+						Skopiuj z paczki plików plik <em>strings.xml</em> do katalogu values</br>
+						<pre><code class="language-java">public class BeaconItem {
+    public static Map&lt;String, Integer[]&gt; beerMap;
+
+    static {
+        beerMap = new HashMap<>();
+        beerMap.put("saison", new Integer[]{12,14});
+        beerMap.put("apa", new Integer[]{9,11});
+        beerMap.put("biale", new Integer[]{4,6});
+        beerMap.put("marcowe", new Integer[]{6,8});
+        beerMap.put("bock", new Integer[]{9,11});
+        beerMap.put("porter", new Integer[]{8,12});
+    }
+}	</code></pre>
+					</section>
+					<section>
+						Skopiuj z paczki plików plik <em>BeerItem.java</em></br>
+							Wygląda on tak:
+						<pre><code class="language-java">&lt;string-array name="beer_list"&gt;
+    &lt;item&gt;Saison&lt;/item&gt;
+    &lt;item&gt;APA&lt;/item&gt;
+    &lt;item&gt;Biale&lt;/item&gt;
+    &lt;item&gt;Marcowe&lt;/item&gt;
+    &lt;item&gt;Bock&lt;/item&gt;
+    &lt;item&gt;Porter&lt;/item&gt;
+&lt;/string-array&gt;	</code></pre>
+					</section>
+
+    				<section>
+    					Layout dla elementu beer będzie taki sam jak dla elementu beacon (<em>item.xml</em>)				
+    				</section>
+    				<section>
+						Zrób kopię napisanego <u>BeaconArrayAdapter</u> z nazwą <u>BeerArrayAdapter</u> a następnie każde
+						wystąpienie <u>BeaconItem</u> zamień na <u>String</u> </br>
+						oraz </br><u>BeaconArrayAdapter</u> na <u>BeerArrayAdapter</u>
+					</section>
+					<section>
+						Zamień następujące linijki
+						<pre><code class="language-java">final int resourceId = resources.getIdentifier(<u>item.toLowerCase()</u>, 
+	"drawable", mContext.getPackageName());
+
+name.setText(<u>item</u>);	</code></pre>
+					</section>
+					<section>
+    				Stwórz nowy Blank Fragment - <em>BeerListFragment</em>
+						<pre><code class="language-java">public class BeerListFragment extends Fragment {
+    public BeerListFragment() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_beer_list, container,
+        	false);
+
+        return view;
+    }
+}
+</code></pre>
+    				</section>
+    				<section>
+    				Dodaj <em>ListView</em> w pliku <em>fragment_beer_list.xml</em>
+						<pre><code class="language-java">&lt;ListView android:id="@+id/beer_list"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" /&gt;
+</code></pre>
+    				</section>
+    				<section>
+    				W metodzie <em>onItemClick</em> w pliku <em>BeaconListFragment</em> dodaj podmianę fragmentu
+    				oraz ustaw argumenty
+						<pre><code class="language-java">@Override
+public void onItemClick(AdapterView&lt;?&gt; parent, View view, int position, long id) {
+    BeaconItem beacon = (BeaconItem) parent.getItemAtPosition(position);
+
+    Bundle bundle = new Bundle();
+    bundle.putString("beaconId", beacon.getId());
+    Fragment fragment = new BeerListFragment();
+    fragment.setArguments(bundle);
+
+    getActivity().getFragmentManager().beginTransaction()
+            .replace(R.id.main_fragment, fragment, "BeerListFragment")
+            .addToBackStack("BeerListFragment").commit();
+
+}
+</code></pre>
+    				</section>
+    				<section>
+    				W pliku <em>BeerListFragment</em> stwórz pole beaconId, zainicjalizuj ListView oraz odbierz dane
+    				przesłane przez poprzedni fragment
+						<pre><code class="language-java">private String beaconId;
+
+@Override
+public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                         Bundle savedInstanceState) {
+    // Inflate the layout for this fragment
+    View view = inflater.inflate(R.layout.fragment_beer_list, container, false);
+
+    ListView beerList = (ListView) view.findViewById(R.id.beer_list);
+
+    Bundle bundle = this.getArguments();
+    if (bundle != null) {
+        beaconId = bundle.getString("beaconId", "");
+    }
+</code></pre>
+    				</section>
+    				<section>
+    				Stwórz <em>OnItemClickListener</em>, pobierz listę piw z pliku <em>strings.xml</em> oraz
+    				ustaw <em>BeerArrayAdapter</em> na ListView
+						<pre><code class="language-java">AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
+    @Override
+    public void onItemClick(AdapterView&lt;?&gt; parent, View view, int position, long id) {
+
+    }
+};
+
+beerList.setOnItemClickListener(itemClickListener);
+
+String[] list = getResources().getStringArray(R.array.beer_list);
+
+BeerArrayAdapter beerAdapter = new BeerArrayAdapter(getActivity(), 
+	new ArrayList<>(Arrays.asList(list)));
+beerList.setAdapter(beerAdapter);
+</code></pre>
+    				</section>
+    				<section>
+    				W metodzie <em>onItemClick</em> dodaj podmianę fragmentu
+    				oraz ustaw argumenty
+						<pre><code class="language-java">@Override
+public void onItemClick(AdapterView&lt;?&gt; parent, View view, int position, long id) {
+    String beer = (String) parent.getItemAtPosition(position);
+
+    Bundle bundle = new Bundle();
+    bundle.putString("beaconId", beaconId);
+    bundle.putString("beer", beer.toLowerCase());
+
+    Fragment fragment = new TemperatureFragment();
+    fragment.setArguments(bundle);
+
+    getActivity().getFragmentManager().beginTransaction()
+            .replace(R.id.main_fragment, fragment, "TemperatureFragment")
+            .addToBackStack("TemperatureFragment").commit();
+
+}
+</code></pre>
+    				</section>
+    				<section>
+						<h2>Włączcie aplikację i wybierzcie jednego z beaconów. Powinna pojawić się lista piw 
+						(przy kliknięciu aplikacja zgłosi błąd bo jeszcze nie utworzyliśmy ostatniego fragmentu)</h2>
+					</section>
+					<section>
+    				Stwórz nowy Blank Fragment - <em>TemperatureFragment</em>
+						<pre><code class="language-java">public class TemperatureFragment extends Fragment {
+    public TemperatureFragment() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_temperature, container,
+        	false);
+
+        return view;
+    }
+}
+</code></pre>
+    				</section>
+    				<section>
+    				Skopiuj zawartość pliku <em>fragment_temperature.xml</em> z paczki plików do właśnie utworzonego pliku o tej samej nazwie
+						<pre><code class="language-java">&lt;LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"&gt;
+
+    &lt;ImageView android:id="@+id/beer_view"
+        android:layout_width="100dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center" /&gt;
+
+    &lt;TextView android:id="@+id/optimal_temperature_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-thin"
+        android:textSize="24sp"/&gt;
+
+    &lt;TextView android:id="@+id/temperature_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-thin"
+        android:textSize="24sp"/&gt;
+
+    &lt;ImageView android:id="@+id/thermometer_view"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"/&gt;
+
+&lt;/LinearLayout&gt;
+</code></pre>
+    				</section>
+    				<section>
+    				Dodaj pola do fragmentu <em>TemperatureFragment</em>
+						<pre><code class="language-java">private TextView mTemperatureView, mOptimalTemperatureView;
+private ImageView mBeerView, mThermometerView;
+private Handler mHandler;
+private Nearable mCurrentNearable;
+private ApplicationKYN2016 mApplication;
+private Integer[] temperatureRange;
+private static final Integer UPDATE_TEMPERATURE_INTERVAL = 1 * 1000;
+
+private String beer;
+</code></pre>
+    				</section>
+    				<section>
+    				Zainicjalizuj dodane pola
+						<pre><code class="language-java">mApplication = (ApplicationKYN2016) getActivity().getApplication();
+mTemperatureView 	= (TextView) view.findViewById(R.id.temperature_view);
+mOptimalTemperatureView = (TextView) view.findViewById(R.id.optimal_temperature_view);
+mBeerView 		= (ImageView) view.findViewById(R.id.beer_view);
+mThermometerView 	= (ImageView) view.findViewById(R.id.thermometer_view);
+mHandler 		= new Handler();
+</code></pre>
+    				</section>
+    				<section>
+    				Odbierz dane z poprzedniego fragmentu
+						<pre><code class="language-java">String beaconId = "";
+
+Bundle bundle = this.getArguments();
+if (bundle != null) {
+    beaconId = bundle.getString("beaconId", "");
+    beer = bundle.getString("beer", "");
+}
+</code></pre>
+    				</section>
+    				<section>
+    				Wyświetlmy wybrane piwo
+						<pre><code class="language-java">Resources resources = getActivity().getResources();
+final int resourceId = resources.getIdentifier(beer.toLowerCase(), 
+	"drawable", getActivity().getPackageName());
+mBeerView.setImageResource(resourceId);
+</code></pre>
+    				</section>
+    				<section>
+    				Wyświetlmy optymalną temperaturę dla wybranego piwa
+						<pre><code class="language-java">temperatureRange = BeerItem.beerMap.get(beer);
+mOptimalTemperatureView.setText("Optymalna temperatura: " + 
+	temperatureRange[0] + " - " + temperatureRange[1] +  " \u2103");
+</code></pre>
+    				</section>
+    				<section>
+    				Z listy beaconów wybierzmy tego, który ma odebrane id
+						<pre><code class="language-java">Set&lt;Nearable&gt; nearables = mApplication.getTemperatureMap().keySet();
+for (Nearable nearable : nearables){
+    if (nearable.identifier.equals(beaconId)){
+        mCurrentNearable = nearable;
+    }
+}
+</code></pre>
+    				</section>
+    				<section>
+    				!!! TU CZĘŚĆ ADAMA Z WYKRYWANIEM TEMPERATURY !!!
+    				</section>
+
+
+
+
 
 				</section>
 
