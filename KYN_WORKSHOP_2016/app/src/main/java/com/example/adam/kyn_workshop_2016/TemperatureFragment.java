@@ -80,9 +80,9 @@ public class TemperatureFragment extends Fragment {
                 if (mCurrentNearable != null){
                     Double currentTemperature = mApplication.getTemperatureMap().get(mCurrentNearable);
                     temperatureToDisplay = "Aktualna temperatura: " + String.valueOf(currentTemperature) + " \u2103";
-                    if (currentTemperature < temperatureRange[0])
+                    if (currentTemperature <= temperatureRange[0])
                         mThermometerView.setImageResource(R.drawable.cold);
-                    else if (currentTemperature > temperatureRange[1])
+                    else if (currentTemperature >= temperatureRange[1])
                         mThermometerView.setImageResource(R.drawable.hot);
                     else
                         mThermometerView.setImageResource(R.drawable.ideal);
