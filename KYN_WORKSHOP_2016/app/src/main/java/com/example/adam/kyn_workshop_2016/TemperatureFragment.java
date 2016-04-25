@@ -39,75 +39,18 @@ public class TemperatureFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_temperature, container, false);
 
-        mApplication = (ApplicationKYN2016) getActivity().getApplication();
-        mTemperatureView = (TextView) view.findViewById(R.id.temperature_view);
-        mOptimalTemperatureView = (TextView) view.findViewById(R.id.optimal_temperature_view);
-        mBeerView = (ImageView) view.findViewById(R.id.beer_view);
-        mThermometerView = (ImageView) view.findViewById(R.id.thermometer_view);
-        mHandler = new Handler();
-
-        String beaconId = "";
-
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            beaconId = bundle.getString("beaconId", "");
-            beer = bundle.getString("beer", "");
-        }
-
-        Set<Nearable> nearables = mApplication.getTemperatureMap().keySet();
-        for (Nearable nearable : nearables){
-            if (nearable.identifier.equals(beaconId)){
-                mCurrentNearable = nearable;
-            }
-        }
-
-        Resources resources = getActivity().getResources();
-        final int resourceId = resources.getIdentifier(beer.toLowerCase(), "drawable",
-                getActivity().getPackageName());
-        mBeerView.setImageResource(resourceId);
-
-        temperatureRange = BeerItem.beerMap.get(beer);
-        mOptimalTemperatureView.setText("Optymalna temperatura: " + temperatureRange[0] + " - " + temperatureRange[1] +  " \u2103");
-
         return view;
     }
 
-    final Runnable updateTemperature = new Runnable() {
-        @Override
-        public void run() {
-            try {
-                String temperatureToDisplay;
-                if (mCurrentNearable != null){
-                    Double currentTemperature = mApplication.getTemperatureMap().get(mCurrentNearable);
-                    temperatureToDisplay = "Aktualna temperatura: " + String.valueOf(currentTemperature) + " \u2103";
-                    if (currentTemperature <= temperatureRange[0])
-                        mThermometerView.setImageResource(R.drawable.cold);
-                    else if (currentTemperature >= temperatureRange[1])
-                        mThermometerView.setImageResource(R.drawable.hot);
-                    else
-                        mThermometerView.setImageResource(R.drawable.ideal);
-                }
-
-                else
-                    temperatureToDisplay = "Unknown";
-
-                mTemperatureView.setText(temperatureToDisplay);
-            } finally {
-                mHandler.postDelayed(updateTemperature, UPDATE_TEMPERATURE_INTERVAL);
-            }
-        }
-    };
 
     @Override
     public void onResume() {
         super.onResume();
-        updateTemperature.run();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mHandler.removeCallbacks(updateTemperature);
     }
 
 
